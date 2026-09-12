@@ -39,13 +39,15 @@ include_once("../config/connection.php");
 
 <?php 
 
-$getProducts= "SELECT * FROM `products`";
+  $getProducts= "SELECT * FROM `products` as p
+  INNER JOIN `categories` as c
+  ON p.cat_id = c.cat_id; ";
 
-$result= mysqli_query($conn,$getProducts);
+  $result= mysqli_query($conn,$getProducts);
 
-if(mysqli_num_rows($result)   > 0){
+  if(mysqli_num_rows($result)   > 0){
 
-while($row = mysqli_fetch_assoc($result) ){
+  while($row = mysqli_fetch_assoc($result) ){
 ?>
 <tr>
                             <td><?php echo $row['product_id'] ?></td>
@@ -53,13 +55,15 @@ while($row = mysqli_fetch_assoc($result) ){
                             <td><?php echo $row['description'] ?></td>
                             <td><?php echo $row['price'] ?></td>
                             <td><?php echo $row['stock'] ?></td>
-                            <td><?php echo $row['image'] ?></td>
-                            <td><?php echo $row['cat_id'] ?></td>
+                            <td><img src="<?php echo $row['image'] ?>" alt="" height="65" class="rounded-circle"></td>
+                            <td><?php echo $row['cat_name'] ?></td>
                             <td>
-                              <label class="badge badge-info">On hold</label>
+                              <label class="badge badge-info"><?php echo $row['created_at'] ?></label>
                             </td>
                             <td>
-                              <button class="btn btn-outline-primary">View</button>
+                              <a href="./productDetails.php?id=<?php echo $row['product_id'] ?>" class="btn btn-outline-primary my-1">View</a>
+                              <a  href="./editProduct.php?id=<?php echo $row['product_id'] ?>"class="btn btn-outline-success my-1">Edit</a>
+                              <a  href="./deleteProduct.php?id=<?php echo $row['product_id'] ?>"class="btn btn-outline-danger my-1">Delete</a>
                             </td>
                         </tr>
 <?php

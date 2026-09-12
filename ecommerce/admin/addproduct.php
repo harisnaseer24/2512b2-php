@@ -45,8 +45,28 @@ include_once("../config/connection.php");
                       <label for="cat_id">Category</label>
                         <select class="form-control" required name="cat_id" id="exampleSelectGender">
                           <option selected disabled>Select Category</option>
-                          <option value="1">Men</option>
-                          <option value="2">Women</option>
+
+              <?php 
+              
+              $getCategories= "SELECT * FROM `categories`";
+
+$getCategoriesresult= mysqli_query($conn,$getCategories);
+
+if(mysqli_num_rows($getCategoriesresult)   > 0){
+
+while($row = mysqli_fetch_assoc($getCategoriesresult) ){
+     
+?>
+
+
+ <option value="<?= $row['cat_id'] ?>"><?= $row['cat_name'] ?></option>
+
+<?php
+}
+       }       ?>
+
+                         
+                         
                         </select>
                       </div>
                     <!-- <div class="form-group">
