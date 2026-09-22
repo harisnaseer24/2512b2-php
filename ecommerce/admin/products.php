@@ -55,7 +55,7 @@ include_once("../config/connection.php");
                             <td><?php echo $row['description'] ?></td>
                             <td><?php echo $row['price'] ?></td>
                             <td><?php echo $row['stock'] ?></td>
-                            <td><img src="<?php echo $row['image'] ?>" alt="" height="65" class="rounded-circle"></td>
+                            <td><img src="./uploads/<?php echo $row['image'] ?>" alt="" height="65" class="rounded-circle"></td>
                             <td><?php echo $row['cat_name'] ?></td>
                             <td>
                               <label class="badge badge-info"><?php echo $row['created_at'] ?></label>

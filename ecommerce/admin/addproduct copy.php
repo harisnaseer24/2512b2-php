@@ -21,7 +21,7 @@ include_once("../config/connection.php");
                 <div class="card-body">
                   <h4 class="card-title">Enter product details</h4>
                   
-                  <form class="forms-sample" action="" method="post" enctype="multipart/form-data">
+                  <form class="forms-sample" action="" method="post">
                     <div class="form-group">
                       <label for="title">Title</label>
                       <input type="text"  required class="form-control" name="title"id="title" placeholder="Enter product title">
@@ -36,10 +36,10 @@ include_once("../config/connection.php");
                       <label for="stock">stock</label>
                       <input type="number" required class="form-control" name="stock"id="stock" placeholder="Enter product stock">
                     </div>
-                           <!-- <div class="form-group">
+                           <div class="form-group">
                       <label for="image">image</label>
                       <input type="text" required class="form-control" name="image"id="image" placeholder="Enter product image">
-                    </div> -->
+                    </div>
                     
                     <div class="form-group">
                       <label for="cat_id">Category</label>
@@ -69,16 +69,16 @@ while($row = mysqli_fetch_assoc($getCategoriesresult) ){
                          
                         </select>
                       </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                       <label>File upload</label>
-                      <input type="file" name="img" class="file-upload-default">
+                      <input type="file" name="img[]" class="file-upload-default">
                       <div class="input-group col-xs-12">
                         <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
                         <span class="input-group-append">
                           <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
                         </span>
                       </div>
-                    </div>
+                    </div> -->
                    
                     <div class="form-group">
                       <label for="description">Description</label>
@@ -115,37 +115,15 @@ if(isset($_POST['addproduct'])){
 $title= $_POST['title'];
 $price= $_POST['price'];
 $stock= $_POST['stock'];
-// $image= $_POST['image'];
+$image= $_POST['image'];
 $cat_id= $_POST['cat_id'];
 $description= $_POST['description'];
-$allowedTypes= ['image/png','image/jpg','image/jpeg','image/webp','image/gif','image/jfif'];
 
-echo "<pre>";
-print_r($_FILES['img']);
-echo "</pre>";
-// image is present or not
-if($_FILES['img']['error'] == 4){
- echo "<script>alert('Please select image first') </script>";
-}
-//image size valid
-else if($_FILES['img']['size'] > 2000000 ){
-echo "<script>alert('File is too large. Please upload file less than 2MB.') </script>";
-}
-else if(!in_array( $_FILES['img']['type'],$allowedTypes) ){
-echo "<script>alert('File type is not supported. Please select valid image type i.e PNG,JPG,JPEG.') </script>";
-}
-else{
-  // 64378266374636342_Cross Platform App Workshop Schedule.png
-$imageName= uniqid().'_'.$_FILES['img']['name'];
-
- $add = "INSERT INTO `products`( `title`, `description`, `price`, `stock`, `image`, `cat_id`) VALUES ('$title','$description','$price','$stock','$imageName','$cat_id')";
+$add = "INSERT INTO `products`( `title`, `description`, `price`, `stock`, `image`, `cat_id`) VALUES ('$title','$description','$price','$stock','$image','$cat_id')";
 
 $result= mysqli_query($conn, $add);
 if ($result) {
-
-move_uploaded_file($_FILES['img']['tmp_name'],"uploads/".$imageName);
-
-
+  # code...
   echo "<script>alert('Product added successfully')
   window.location.href='./products.php'
   </script>";
@@ -160,31 +138,4 @@ move_uploaded_file($_FILES['img']['tmp_name'],"uploads/".$imageName);
 
 
 
-//image type/extension valid
-// else if($_FILES['img']['size'] > 20000000 ){
-// echo "<script>alert('File is too large. Please upload file less than 2MB.') </script>";
-// }
-
-
-
-// $add = "INSERT INTO `products`( `title`, `description`, `price`, `stock`, `image`, `cat_id`) VALUES ('$title','$description','$price','$stock','$image','$cat_id')";
-
-// $result= mysqli_query($conn, $add);
-// if ($result) {
-//   # code...
-//   echo "<script>alert('Product added successfully')
-//   window.location.href='./products.php'
-//   </script>";
-// } else {
-//   # code...
-//     echo "<script>alert('Failed to add product')</script>";
-// }
-
-
-
-}
-
-
-
 ?>
-<script src="./js/file-upload.js"></script>
