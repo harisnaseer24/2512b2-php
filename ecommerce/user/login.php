@@ -1,5 +1,6 @@
 <?php 
 require_once('../config/connection.php');
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -129,10 +130,30 @@ if (mysqli_num_rows($checkUserResult) == 0) {
   window .location.href='./signup.php'
 </script>";
 }else{
+
 $verifyPassword = password_verify($password, $user['password']);
-if ($verifyPassword ==1) {
-    echo "<script>alert('Login Success!') 
+if ($verifyPassword) {
+
+//Session
+
+$_SESSION['email'] = $user['email'];
+$_SESSION['role'] = $user['role'];
+$_SESSION['username'] = $user['username'];
+
+
+
+if ($user['role'] == 'admin') {
+  # code...
+      echo "<script>alert('Login Success!') 
+  window.location.href='../admin/index.php'</script>";
+} else {
+  # code...
+     echo "<script>alert('Login Success!') 
   window.location.href='./index.php'</script>";
+}
+
+
+
 } else {
       echo "<script>alert('Invalid Credentials..!')</script>";
 }

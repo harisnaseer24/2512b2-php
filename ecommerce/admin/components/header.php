@@ -1,3 +1,19 @@
+<?php 
+session_start();
+
+// $role;  $role !=admin
+
+
+if( !isset($_SESSION['role']) ||  $_SESSION['role']!="admin"){
+  echo "<script>location.href='../user/login.php'</script>";
+}
+
+
+$username = $_SESSION['username'];
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -392,7 +408,7 @@
               </div>
               <div class="profile-name">
                 <p class="name">
-                  Welcome Jane
+                  Welcome <?= $username ?>
                 </p>
                 <p class="designation">
                   Super Admin
