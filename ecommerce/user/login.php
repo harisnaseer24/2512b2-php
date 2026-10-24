@@ -136,6 +136,7 @@ if ($verifyPassword) {
 
 //Session
 
+$_SESSION['user_id'] = $user['user_id'];
 $_SESSION['email'] = $user['email'];
 $_SESSION['role'] = $user['role'];
 $_SESSION['username'] = $user['username'];

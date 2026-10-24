@@ -12,6 +12,4 @@ if(!$conn){
     die("Failed to connect");
 }
 
-
-
 ?>
